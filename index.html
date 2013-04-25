@@ -21,7 +21,6 @@
         client_id: '5748fd13219691e5b63f4ce760c8a7a0'
       });
 
-
       function doSearch() {
         var searchTerm = document.getElementById('search').value;
 
@@ -32,8 +31,16 @@
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             console.log(tracks[track]["artwork_url"]);
-            var Catalog = document.getElementById('catalog');
-            Catalog.appendChild(img);
+            if (tracks[track]["artwork_url"] == null) {
+              console.log(""); } 
+            else { 
+              var Catalog = document.getElementById('catalog');
+              Catalog.appendChild(img);
+            }
+
+            
+
+            // var streamurl = document.createElement('a href')
 
           }
         });
