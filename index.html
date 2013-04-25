@@ -4,7 +4,10 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>My Amazing SoundCloud Catalog</title>
+    <script src="/source/jquery-1.9.1.min.js"> </script> 
     <script src="http://connect.soundcloud.com/sdk.js"></script>
+    <link href="main.css" type="text/css" rel="stylesheet">
+
   </head>
 
   <body>
@@ -12,9 +15,15 @@
     <h1>My Amazing SoundCloud Catalog</h1>
 
     <input type="text" id="search" onchange="doSearch()" />
-
+    <BR><BR>
     <div id="catalog">
     </div>
+
+    <div id="modal" class="hidden" onclick="hidemodal()">
+      <div id="trackinfo"></div>
+    </div>
+
+
 
     <script>
       SC.initialize({
@@ -25,27 +34,56 @@
         var searchTerm = document.getElementById('search').value;
 
         // Search soundcloud for artists
-        SC.get('/tracks', { q: searchTerm, license: 'cc-by-sa' }, function(tracks) {
+        SC.get('/tracks', { q: searchTerm}, function(tracks) {
           for(track in tracks) {
-            console.log(tracks[track]);
+            // console.log(tracks[track]);
+
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
-            console.log(tracks[track]["artwork_url"]);
+            var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
+            img.setAttribute("onclick", "showTrackInfo('" + title + " " + tracks[track].uri + "')"); 
+            console.log(tracks[track]);
+
+            var div = document.createElement('div');
+
             if (tracks[track]["artwork_url"] == null) {
               console.log(""); } 
             else { 
+
               var Catalog = document.getElementById('catalog');
               Catalog.appendChild(img);
+
             }
-
-            
-
-            // var streamurl = document.createElement('a href')
-
           }
         });
       };
+
+
+      function showTrackInfo(track) { 
+        var trackInfoElement = document.getElementById("trackinfo");
+        trackInfoElement.appendChild(document.createTextNode(track));
+
+        var modal = document.getElementById("modal"); 
+        modal.setAttribute("class", ""); 
+      }
+
+      function hidemodal() { 
+        var trackInfoElement = document.getElementById("trackinfo");
+        trackInfoElement.childNodes;
+
+        while ( trackInfoElement.firstChild ) trackInfoElement.removeChild( trackInfoElement.firstChild );
+
+        var modal = document.getElementById("modal");
+        modal.setAttribute("class", "hidden"); 
+      }
+
     </script>
   </body>
 
 </html>
+
+
+<!-- After click on image, need to clear the cached title & url 
+
+
+  --> 
