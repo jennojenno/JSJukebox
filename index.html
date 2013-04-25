@@ -21,6 +21,7 @@
         client_id: '5748fd13219691e5b63f4ce760c8a7a0'
       });
 
+
       function doSearch() {
         var searchTerm = document.getElementById('search').value;
 
@@ -28,6 +29,12 @@
         SC.get('/tracks', { q: searchTerm, license: 'cc-by-sa' }, function(tracks) {
           for(track in tracks) {
             console.log(tracks[track]);
+            var img = document.createElement('img');
+            img.setAttribute("src", (tracks[track]["artwork_url"]));
+            console.log(tracks[track]["artwork_url"]);
+            var Catalog = document.getElementById('catalog');
+            Catalog.appendChild(img);
+
           }
         });
       };
