@@ -7,93 +7,109 @@
     <script src="/source/jquery-1.9.1.min.js"> </script> 
     <script src="http://connect.soundcloud.com/sdk.js"></script>
     <link href="main.css" type="text/css" rel="stylesheet">
-
+ 
   </head>
-
+ 
   <body>
     <div id="main">
-
+ 
     <h1>Interactive SoundCloud Wall</h1>
-
-    Search for a track or an artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
+ 
+    Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
     <BR><BR>
     <div id="catalog">
     </div>
-
+ 
     <div id="modal" class="hidden" onmouseout="hidemodal()" onclick="goplay()">
       <div id="trackinfo"></div>
     </div>
-
-
+ 
+ 
     <script>
       SC.initialize({
         client_id: '5748fd13219691e5b63f4ce760c8a7a0'
       });
-
+ 
       function doSearch() {
         var searchTerm = document.getElementById('search').value;
-
+ 
         // Search soundcloud for artists
         SC.get('/tracks', { q: searchTerm}, function(tracks) {
           for(track in tracks) {
-            // console.log(tracks[track]);
-
+ 
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
-            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ ". \\nClick once to be redirected to play." + " " + tracks[track].permalink_url + "')"); 
-
-
-
+            
 
             linky = document.createElement('a');
             linky.setAttribute("href", (tracks[track].permalink_url));
-            
+            console.log(linky);
 
+            img.setAttribute("ondblclick", "showTrackInfo('" + title + "\\n"+ tracks[track].uri + " " + linky + "\\n\\n(Click once to play) " + "')"); 
 
+            console.log(img);
+
+            img.setAttribute("onclick", "window.open(linky)");
+
+ 
             if (tracks[track]["artwork_url"] == null) {
               console.log(""); } 
             else { 
-
+ 
               var Catalog = document.getElementById('catalog');
               Catalog.appendChild(img);
-
+ 
             }
           }
         });
       };
-
+ 
       function showTrackInfo(track) { 
         var trackInfoElement = document.getElementById("trackinfo");
         trackInfoElement.appendChild(document.createTextNode(track));
 
+        //trackinfoelement is an empty div with that id 
+ 
         var modal = document.getElementById("modal"); 
         modal.setAttribute("class", ""); 
-      }
 
+
+
+        // modal is div id modal with class hidden 
+      }
+ 
       function hidemodal() { 
         var trackInfoElement = document.getElementById("trackinfo");
         trackInfoElement.childNodes;
-
+ 
         while ( trackInfoElement.firstChild ) trackInfoElement.removeChild( trackInfoElement.firstChild );
-
+ 
         var modal = document.getElementById("modal");
         modal.setAttribute("class", "hidden"); 
       }
-
-
+ 
       function goplay(track) { 
-        var trackInfoElement = document.getElementById("trackinfo");
 
-        console.log(linky);
+        // $('div#trackinfo').append('<a href="'+permurl+'">PLAY</a>');
 
-        window.location = (linky);
+        //var searchTerm = document.getElementById('search').value;
+        // console.log(searchTerm);
+
+          // SC.get('/tracks', { q: searchTerm}, function(tracks) {
+          // for(track in tracks) {
+             
+        //console.log(permurl);
+
+        // //   }
+        // // }
+        // window.location = (permurl);
 
       }
-
+ 
+ 
     </script>
   </div>
   </body>
-
+ 
 </html>
-
