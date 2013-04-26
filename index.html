@@ -15,12 +15,12 @@
 
     <h1>Interactive SoundCloud Wall</h1>
 
-    Search for a track or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
+    Search for a track or an artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
     <BR><BR>
     <div id="catalog">
     </div>
 
-    <div id="modal" class="hidden" ondblclick="hidemodal()" onclick="goplay()">
+    <div id="modal" class="hidden" onmouseout="hidemodal()" onclick="goplay()">
       <div id="trackinfo"></div>
     </div>
 
@@ -41,7 +41,7 @@
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
-            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ ". \\nClick once to be redirected to play." + " " + tracks[track].permalink_url + "\\n\\n(Double click to close) " + "')"); 
+            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ ". \\nClick once to be redirected to play." + " " + tracks[track].permalink_url + "')"); 
 
 
 
