@@ -15,17 +15,16 @@
 
     <h1>Interactive SoundCloud Wall</h1>
 
-    Search for a track or artist: <input type="text" id="search" onchange="doSearch()" />
+    Search for a track or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
     <BR><BR>
     <div id="catalog">
     </div>
 
-    <div id="modal" class="hidden" ondblclick="hidemodal()">
+    <div id="modal" class="hidden" ondblclick="hidemodal()" onclick="goplay()">
       <div id="trackinfo"></div>
     </div>
 
 
-    <center>
     <script>
       SC.initialize({
         client_id: '5748fd13219691e5b63f4ce760c8a7a0'
@@ -42,10 +41,15 @@
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
-            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ tracks[track].uri + "\\n\\n(Double click to close) " + "')"); 
-            console.log(tracks[track]);
+            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ ". \\nClick once to be redirected to play." + " " + tracks[track].permalink_url + "\\n\\n(Double click to close) " + "')"); 
 
-            var div = document.createElement('div');
+
+
+
+            linky = document.createElement('a');
+            linky.setAttribute("href", (tracks[track].permalink_url));
+            
+
 
             if (tracks[track]["artwork_url"] == null) {
               console.log(""); } 
@@ -58,7 +62,6 @@
           }
         });
       };
-
 
       function showTrackInfo(track) { 
         var trackInfoElement = document.getElementById("trackinfo");
@@ -78,8 +81,17 @@
         modal.setAttribute("class", "hidden"); 
       }
 
+
+      function goplay(track) { 
+        var trackInfoElement = document.getElementById("trackinfo");
+
+        console.log(linky);
+
+        window.location = (linky);
+
+      }
+
     </script>
-  </center>
   </div>
   </body>
 
