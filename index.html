@@ -20,7 +20,7 @@
     <div id="catalog">
     </div>
  
-    <div id="modal" class="hidden" onmouseout="hidemodal()" onclick="goplay()">
+    <div id="modal" class="hidden" onclick="hidemodal()">
       <div id="trackinfo"></div>
     </div>
  
@@ -46,11 +46,12 @@
             linky.setAttribute("href", (tracks[track].permalink_url));
             console.log(linky);
 
-            img.setAttribute("ondblclick", "showTrackInfo('" + title + "\\n"+ tracks[track].uri + " " + linky + "\\n\\n(Click once to play) " + "')"); 
+            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ tracks[track].uri + " " + "\\n\\n(click to close) " + "')"); 
 
             console.log(img);
 
-            img.setAttribute("onclick", "window.open(linky)");
+            //img.setAttribute("onclick", "window.open(linky)");
+
 
  
             if (tracks[track]["artwork_url"] == null) {
@@ -59,6 +60,7 @@
  
               var Catalog = document.getElementById('catalog');
               Catalog.appendChild(img);
+              $('div#catalog').append('<a href="'+linky+'"><img src="http://i.imgur.com/rGdvfl7.png"></a>');
  
             }
           }
