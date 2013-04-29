@@ -1,6 +1,9 @@
 <!DOCTYPE html >
+
 <html>
   <head>
+
+
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Interactive SoundCloud Catalog </title>
@@ -15,9 +18,12 @@
  
     <h1>Interactive SoundCloud Wall</h1>
  
-    Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" />
+    <div id="searchtext">Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" /> <BR></div>
     <BR><BR>
     <div id="catalog">
+
+      <div id="soundiframe"> </div>
+
     </div>
  
     <div id="modal" class="hidden" onclick="hidemodal()">
@@ -31,7 +37,9 @@
       });
  
       function doSearch() {
+
         var searchTerm = document.getElementById('search').value;
+        $('div#catalog').append('(click album for track info)<br>');
  
         // Search soundcloud for artists
         SC.get('/tracks', { q: searchTerm}, function(tracks) {
@@ -40,7 +48,6 @@
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
-            
 
             linky = document.createElement('a');
             linky.setAttribute("href", (tracks[track].permalink_url));
@@ -50,9 +57,6 @@
 
             console.log(img);
 
-            //img.setAttribute("onclick", "window.open(linky)");
-
-
  
             if (tracks[track]["artwork_url"] == null) {
               console.log(""); } 
@@ -60,8 +64,30 @@
  
               var Catalog = document.getElementById('catalog');
               Catalog.appendChild(img);
-              $('div#catalog').append('<a href="'+linky+'"><img src="http://i.imgur.com/rGdvfl7.png"></a>');
- 
+
+              // The PLAY button, with link to Song, target to iFrame
+              $('div#catalog').append('<a href="'+linky+'"&output=embed target="sc-widget"><img src="http://i.imgur.com/rGdvfl7.png" id="play"></a>');
+
+
+
+              var song = document.createElement('div');
+
+              $.get(
+                'http://soundcloud.com/oembed?' + 
+                'url=' + linky + 
+                '&format=json&maxheight=296'
+                )
+              .done(function (response) {
+                song.innerHTML = response.html;
+                document.body.appendChild(song);
+              });
+
+
+
+
+
+              
+
             }
           }
         });
@@ -76,8 +102,6 @@
         var modal = document.getElementById("modal"); 
         modal.setAttribute("class", ""); 
 
-
-
         // modal is div id modal with class hidden 
       }
  
@@ -91,23 +115,6 @@
         modal.setAttribute("class", "hidden"); 
       }
  
-      function goplay(track) { 
-
-        // $('div#trackinfo').append('<a href="'+permurl+'">PLAY</a>');
-
-        //var searchTerm = document.getElementById('search').value;
-        // console.log(searchTerm);
-
-          // SC.get('/tracks', { q: searchTerm}, function(tracks) {
-          // for(track in tracks) {
-             
-        //console.log(permurl);
-
-        // //   }
-        // // }
-        // window.location = (permurl);
-
-      }
  
  
     </script>

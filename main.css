@@ -56,3 +56,27 @@ img {
 padding: 4px;
 
 }
+
+#catalog {
+
+}
+
+#soundiframe {
+	float: right;
+	width: 320px;
+	height: 150px;
+}
+
+#play {
+	position: relative;
+	top: -3px;
+	left: -28px;
+
+}
+
+#searchtext {
+	background-color: #8ec127;
+	padding: 8px;
+	padding-left: 10px;
+	padding-top: 10px;
+}
