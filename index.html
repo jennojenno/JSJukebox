@@ -39,23 +39,24 @@
       function doSearch() {
 
         var searchTerm = document.getElementById('search').value;
-        $('div#catalog').append('(click album for track info)<br>');
  
         // Search soundcloud for artists
         SC.get('/tracks', { q: searchTerm}, function(tracks) {
           for(track in tracks) {
+
+            console.log(tracks[track]);
  
             var img = document.createElement('img');
             img.setAttribute("src", (tracks[track]["artwork_url"]));
             var title = tracks[track].title.replace("'", "\\\'").replace("\"", "\\\"");
 
+            var song = document.createElement('div');
+
             linky = document.createElement('a');
             linky.setAttribute("href", (tracks[track].permalink_url));
-            console.log(linky);
 
-            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n"+ tracks[track].uri + " " + "\\n\\n(click to close) " + "')"); 
+            img.setAttribute("onclick", "showTrackInfo('" + title + "\\n" + "\\n" + tracks[track].label_name + "\\n\\n" + "(click to close)" + "')"); 
 
-            console.log(img);
 
  
             if (tracks[track]["artwork_url"] == null) {
@@ -65,30 +66,31 @@
               var Catalog = document.getElementById('catalog');
               Catalog.appendChild(img);
 
-              // The PLAY button, with link to Song, target to iFrame
-              $('div#catalog').append('<a href="'+linky+'"&output=embed target="sc-widget"><img src="http://i.imgur.com/rGdvfl7.png" id="play"></a>');
+              // The PLAY button, with link to Song, is appended to 
+              // the catalog div with linked images 
+              $('div#catalog').append('<img src="http://i.imgur.com/rGdvfl7.png" id="play">');
 
 
+              // song is a new div element that goes into soundiframe
+              // simply gets the last known linky and creates a player
+              // this function should be tied to a specific song button
 
-              var song = document.createElement('div');
+              $('img#play').click(function() {
+            
 
-              $.get(
+              songplayer = $.get(
                 'http://soundcloud.com/oembed?' + 
                 'url=' + linky + 
                 '&format=json&maxheight=296'
                 )
               .done(function (response) {
                 song.innerHTML = response.html;
-                document.body.appendChild(song);
+                document.getElementById("soundiframe").appendChild(song);
               });
-
-
-
-
-
-              
-
+              });
             }
+
+
           }
         });
       };
