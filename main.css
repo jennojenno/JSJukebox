@@ -66,13 +66,19 @@ padding: 4px;
 	width: 400px;
 	height: 200px;
 	position: relative;
-	padding-top: 38px;
+	padding-top: 60px;
+	padding-right: 17px;
 }
 
-#play {
+#songinfo {
 	position: relative;
 	top: -3px;
-	left: -1px;
+left: -21px;
+	background-color: #ffffff;
+	-webkit-border-radius: 8px 0px 0px 0px;
+border-radius: 8px 0px 0px 0px;
+border-width: 1px;
+border-color: #666666;
 
 }
 

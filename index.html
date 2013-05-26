@@ -8,8 +8,10 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>Interactive SoundCloud Catalog </title>
   <script src="/source/jquery-1.9.1.min.js"> </script> 
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="http://connect.soundcloud.com/sdk.js"></script>
   <link href="main.css" type="text/css" rel="stylesheet">
+  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 </head>
 
@@ -19,12 +21,12 @@
     <h1>Interactive SoundCloud Wall</h1>
 
     <div id="searchtext">Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="emptySearch(); doSearch()" /> 
-      <BR>
+      <BR />
     </div>
 
     <div id="soundiframe"> 
-      </div>
-    <BR><BR>
+    </div>
+    <BR /><BR />
 
     <div id="catalog">
     </div>
@@ -42,6 +44,7 @@
 
     function emptySearch() {
       $('#catalog').empty();
+      $('#soundiframe').empty();
     }
 
     function doSearch() {
@@ -53,17 +56,26 @@
           tracks.forEach(function(track, index) {
 
             var title = tracks[index].title.replace("'", "\\\'").replace("\"", "\\\"");
-            var albumart = "<img id='"+(tracks[index]["id"])+"'src='"+(tracks[index]["artwork_url"])+"' class='tooltip' />";
+            var indexid = tracks[index]["id"]; 
+            var albumart = "<img id='"+indexid+"'src='"+(tracks[index]["artwork_url"])+"' class='tooltip' />";
             var constantalbum = (tracks[index]["artwork_url"]);
             var permalink = (tracks[index]["permalink_url"]);
 
-            //console.log(constantalbum);
-            indexid = tracks[index]["id"]; 
             if (constantalbum !== null) {
               $('#catalog').append(albumart);
+              $('div#catalog').append("<img src='http://i.imgur.com/jmM0Y7T.gif' width=10 id='songinfo'>");
+              //$('div#catalog').append('<div id="dialog">'+indexid+'</div>');
             }
 
-            $("#"+indexid).hover(function() {
+            // $("#"+indexid).click(function() {
+            //   // $("p").append(document.createTextNode("Hello"));
+            //   $("div#dialog").dialog({
+            //     height: 140,
+            //     modal: true
+            //   });
+            // });
+
+            $('img#songinfo').click(function() {
               console.log(title);
             });
 
@@ -72,20 +84,29 @@
               $.get(
               'http://soundcloud.com/oembed?' + 
               'url=' + permalink + 
-              '&format=json&maxheight=296')
+              '&auto_play=true&format=json&maxheight=296')
+
 
               .done(function (response) {
                 song.innerHTML = response.html;
                 $('#soundiframe').empty();
                 document.getElementById("soundiframe").appendChild(song);
+
+
               });
             });
-
           });
-
         });
       };
 
+      // $("#"+indexid).hover(function() {
+      //   $(function() {
+      //     $( "#dialog" ).dialog({
+      //       height: 140,
+      //       modal: true
+      //     });
+      //   });
+      // });
 
       function showTrackInfo(track) { 
         var trackInfoElement = document.getElementById("trackinfo");
@@ -106,9 +127,6 @@
         var modal = document.getElementById("modal");
         modal.setAttribute("class", "hidden"); 
       };
-
-
-
 
 
       </script>
