@@ -66,8 +66,7 @@ padding: 4px;
 	width: 400px;
 	height: 200px;
 	position: relative;
-	top: 3px;
-	left: -5px;
+	padding-top: 38px;
 }
 
 #play {
