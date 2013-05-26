@@ -54,8 +54,14 @@ font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
 img { 
 
 padding: 4px;
+font-size: 0.2em;
 
 }
+
+label {
+    display: inline-block;
+    width: 5em;
+  }
 
 #catalog {
 
@@ -70,7 +76,7 @@ padding: 4px;
 	padding-right: 17px;
 }
 
-#songinfo {
+.songinfo {
 	position: relative;
 	top: -3px;
 left: -21px;

@@ -63,20 +63,14 @@
 
             if (constantalbum !== null) {
               $('#catalog').append(albumart);
-              $('div#catalog').append("<img src='http://i.imgur.com/jmM0Y7T.gif' width=10 id='songinfo'>");
-              //$('div#catalog').append('<div id="dialog">'+indexid+'</div>');
+              $('div#catalog').append("<img title='"+title+"'src='http://i.imgur.com/jmM0Y7T.gif' width=10 class='songinfo'>");
             }
 
-            // $("#"+indexid).click(function() {
-            //   // $("p").append(document.createTextNode("Hello"));
-            //   $("div#dialog").dialog({
-            //     height: 140,
-            //     modal: true
-            //   });
-            // });
-
-            $('img#songinfo').click(function() {
-              console.log(title);
+            $('img[class="songinfo"]').hover(function() {
+              //console.log(title);
+              // if indexid is equal to the id clicked on
+              // display title 
+              $( document ).tooltip();
             });
 
             $("#"+indexid).click(function() {
@@ -85,7 +79,6 @@
               'http://soundcloud.com/oembed?' + 
               'url=' + permalink + 
               '&auto_play=true&format=json&maxheight=296')
-
 
               .done(function (response) {
                 song.innerHTML = response.html;
