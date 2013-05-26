@@ -18,14 +18,15 @@
 
     <h1>Interactive SoundCloud Wall</h1>
 
-    <div id="searchtext">Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="doSearch()" /> 
+    <div id="searchtext">Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="emptySearch(); doSearch()" /> 
       <BR>
     </div>
+
+    <div id="soundiframe"> 
+      </div>
     <BR><BR>
 
     <div id="catalog">
-      <div id="soundiframe"> 
-      </div>
     </div>
 
     <div id="modal" class="hidden" onclick="hidemodal()">
@@ -38,6 +39,10 @@
     SC.initialize({
       client_id: '5748fd13219691e5b63f4ce760c8a7a0'
     });
+
+    function emptySearch() {
+      $('#catalog').empty();
+    }
 
     function doSearch() {
 
