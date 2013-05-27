@@ -2,17 +2,14 @@
 
 <html>
 <head>
-
-
   <meta http-equiv="X-UA-Compatible" content="chrome=1" />
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title>Interactive SoundCloud Catalog </title>
-  <script src="/source/jquery-1.9.1.min.js"> </script> 
+  <script src="jquery-1.9.1.min.js"> </script> 
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script src="http://connect.soundcloud.com/sdk.js"></script>
   <link href="main.css" type="text/css" rel="stylesheet">
   <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"/>
-
 </head>
 
 <body>
@@ -20,7 +17,7 @@
 
     <h1>Interactive SoundCloud Wall</h1>
 
-    <div id="searchtext">Search by song name or artist. Watch your wall grow: <input type="text" id="search" onchange="emptySearch(); doSearch()" /> 
+    <div id="searchtext">Search by song name or artist: <input type="text" id="search" button = "Submit" onchange="emptySearch(); doSearch()" /> <input type="submit"/\>
       <BR />
     </div>
 
@@ -31,12 +28,6 @@
     <div id="catalog">
     </div>
 
-    <div id="modal" class="hidden" onclick="hidemodal()">
-      <div id="trackinfo">
-      </div>
-    </div>
-
-
     <script>
     SC.initialize({
       client_id: '5748fd13219691e5b63f4ce760c8a7a0'
@@ -44,7 +35,6 @@
 
     function emptySearch() {
       $('#catalog').empty();
-      $('#soundiframe').empty();
     }
 
     function doSearch() {
@@ -63,13 +53,10 @@
 
             if (constantalbum !== null) {
               $('#catalog').append(albumart);
-              $('div#catalog').append("<img title='"+title+"'src='http://i.imgur.com/jmM0Y7T.gif' width=10 class='songinfo'>");
+              $('div#catalog').append("<img title='"+title+"'src='http://i.imgur.com/jmM0Y7T.gif' width=14 class='songinfo'>");
             }
 
             $('img[class="songinfo"]').hover(function() {
-              //console.log(title);
-              // if indexid is equal to the id clicked on
-              // display title 
               $( document ).tooltip();
             });
 
@@ -84,41 +71,10 @@
                 song.innerHTML = response.html;
                 $('#soundiframe').empty();
                 document.getElementById("soundiframe").appendChild(song);
-
-
               });
             });
           });
         });
-      };
-
-      // $("#"+indexid).hover(function() {
-      //   $(function() {
-      //     $( "#dialog" ).dialog({
-      //       height: 140,
-      //       modal: true
-      //     });
-      //   });
-      // });
-
-      function showTrackInfo(track) { 
-        var trackInfoElement = document.getElementById("trackinfo");
-        trackInfoElement.appendChild(document.createTextNode(track));
-        //trackinfoelement is an empty div with that id 
-
-        var modal = document.getElementById("modal"); 
-        modal.setAttribute("class", ""); 
-        // modal is div id modal with class hidden 
-      };
-
-      function hidemodal() { 
-        var trackInfoElement = document.getElementById("trackinfo");
-        trackInfoElement.childNodes;
-
-        while ( trackInfoElement.firstChild ) trackInfoElement.removeChild( trackInfoElement.firstChild );
-
-        var modal = document.getElementById("modal");
-        modal.setAttribute("class", "hidden"); 
       };
 
 
