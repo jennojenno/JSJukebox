@@ -43,7 +43,7 @@
     function emptySearch() {
       $('#catalog').empty();
       $('#soundiframe').empty();
-      $('#soundiframe').toggleClass("noshow");
+      $('#soundiframe').addClass("noshow");
     }
 
     function doSearch() {
@@ -69,8 +69,12 @@
             });
 
             $("#"+indexid).click(function() {
+              // If #soundiframe has class :noshow, remove it. Else, nothing. 
+
+              if($('#soundiframe').hasClass('noshow')) {
+                $('#soundiframe').removeClass('noshow'); 
+              };
               var song = document.createElement('div');
-              $('#soundiframe').toggleClass("noshow");
               $.get(
               'http://soundcloud.com/oembed?' + 
               'url=' + permalink + 
@@ -81,6 +85,8 @@
                 $('#soundiframe').empty();
                 document.getElementById("soundiframe").appendChild(song);
               });
+
+
             });
           });
         });
