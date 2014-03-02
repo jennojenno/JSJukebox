@@ -1,3 +1,4 @@
+
 <!DOCTYPE html >
 
 <html>
@@ -28,6 +29,12 @@
     <div id="catalog">
     </div>
 
+    <div id="modal" class="hidden" onclick="hidemodal()">
+      <div id="trackinfo">
+      </div>
+    </div>
+
+
     <script>
     SC.initialize({
       client_id: '5748fd13219691e5b63f4ce760c8a7a0'
@@ -35,10 +42,11 @@
 
     function emptySearch() {
       $('#catalog').empty();
+      $('#soundiframe').empty();
+      $('#soundiframe').toggleClass("noshow");
     }
 
     function doSearch() {
-
       var searchTerm = document.getElementById('search').value;
         // Search soundcloud for artists
         SC.get('/tracks', { q: searchTerm}, function(tracks) {
@@ -62,6 +70,7 @@
 
             $("#"+indexid).click(function() {
               var song = document.createElement('div');
+              $('#soundiframe').toggleClass("noshow");
               $.get(
               'http://soundcloud.com/oembed?' + 
               'url=' + permalink + 
