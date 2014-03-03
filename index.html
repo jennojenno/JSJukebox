@@ -52,7 +52,7 @@
 
           tracks.forEach(function(track, index) {
 
-            var title = tracks[index].title;
+            var title = tracks[index].title.replace('"', "'");
             var indexid = tracks[index]["id"]; 
             var albumart = "<img id='"+indexid+"'src='"+(tracks[index]["artwork_url"])+"' class='tooltip' />";
             var constantalbum = (tracks[index]["artwork_url"]);
