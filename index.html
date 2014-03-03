@@ -53,9 +53,9 @@
           tracks.forEach(function(track, index) {
 
             var title = tracks[index].title;
-            console.log("Original title:" + title);
-            var replacetitle = tracks[index].title.replace("'", "\\\'").replace("\"", "\\\"");
-            console.log("Replaced title:" + replacetitle);
+            console.log("Original title: " + title);
+            var replacetitle = tracks[index].title.replace("'", "\\\'");
+            console.log("Replaced title: " + replacetitle);
             var indexid = tracks[index]["id"]; 
             var albumart = "<img id='"+indexid+"'src='"+(tracks[index]["artwork_url"])+"' class='tooltip' />";
             var constantalbum = (tracks[index]["artwork_url"]);
@@ -63,7 +63,13 @@
 
             if (constantalbum !== null) {
               $('#catalog').append(albumart);
-              $('div#catalog').append("<img title='"+title+"'src='info.gif' width=14 class='songinfo'>");
+              $('div#catalog').append('
+                <img title="
+                '+title+'
+                "src='info.gif' 
+                width=14 
+                class='songinfo'>
+                ');
             }
 
             $('img[class="songinfo"]').hover(function() {
